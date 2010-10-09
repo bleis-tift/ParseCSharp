@@ -12,6 +12,9 @@ namespace ParseCSharp
             Rest = rest;
         }
 
+        public abstract S Match<S>(Func<T, Reader<Elem>, S> ifSuccess,
+                                   Func<string, Reader<Elem>, S> ifFailure);
+
         public Reader<Elem> Rest { get; private set; }
 
     }
@@ -40,6 +43,12 @@ namespace ParseCSharp
             if (other == null)
                 return false;
             return Result.Equals(other.Result);
+        }
+
+        public override S Match<S>(Func<T, Reader<Elem>, S> ifSuccess,
+                                   Func<string, Reader<Elem>, S> _)
+        {
+            return ifSuccess(this.Result, this.Rest);
         }
     }
 
@@ -74,5 +83,11 @@ namespace ParseCSharp
             Result = msg;
         }
         public string Result { get; private set; }
+
+        public override S Match<S>(Func<T, Reader<Elem>, S> _,
+                                   Func<string, Reader<Elem>, S> ifFailure)
+        {
+            return ifFailure(this.Result, this.Rest);
+        }
     }
 }

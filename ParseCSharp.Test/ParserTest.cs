@@ -30,10 +30,35 @@ namespace ParseCSharp.Test
         [Test]
         public void 一文字消費する()
         {
-            var parser = new ItemParser<char>();
+            var parser = new ItemParser<char>(c => (char)c);
             var input = Reader.FromString("abc");
             var expected = Success._('a', Reader.FromString("bc"));
             Assert.That(parser.Apply(input), Is.EqualTo(expected));
         }
+
+        [Test]
+        public void ItemParserに空を渡すと失敗する()
+        {
+            var parser = new ItemParser<char>(c => (char)c);
+            var input = Reader.FromString("");
+            var result = parser.Apply(input).Match(
+                (r, rest) => (string)Util.Fail(),
+                (m, rest) => m
+            );
+            var expected = "input is empty.";
+            Assert.That(result, Is.EqualTo(expected));
+        }
+        /*
+        [Test, Explicit]
+        public void Parser() 
+        {
+            var input = Reader.FromString("ab");
+            var expected = Success._(Tuple.Create('a', 'b'), Reader.FromString(""));
+            var a = new ItemParser<char>(c => (char)c);
+            var b = new ItemParser<char>(c => (char)c);
+            var result = (a + b).Apply(input);
+            Assert.That(result, Is.EqualTo(expected));
+        }
+         */
     }
 }

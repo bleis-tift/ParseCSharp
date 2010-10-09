@@ -42,5 +42,31 @@ namespace ParseCSharp.Test
             var result = Success._("aaa", input);
             Assert.That(result.Rest, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void Successに対応する関数が呼びだされる()
+        {
+            var input = Reader.FromString("bc");
+            var opt = Success._("abc", input);
+            var result = opt.Match(
+                (r, rest) => r,
+                (m, rest) => (string)Util.Fail()
+            );
+            Assert.That(result, Is.EqualTo("abc"));
+        }
+
+        [Test]
+        public void Failureに対応する関数が呼び出される()
+        {
+            var input = Reader.FromString("bc");
+            var opt = Failure._("abc", input).Build<string>();
+            var result = opt.Match(
+                (r, rest) => Util.Fail(),
+                (m, rest) => m
+            );
+            Assert.That(result, Is.EqualTo("abc"));
+
+        }
+
     }
 }
