@@ -19,5 +19,13 @@ namespace ParseCSharp.Test
             Assert.That(parser.Apply(input), Is.EqualTo(expected));
         }
 
+        [Test]
+        public void 常に失敗を返す()
+        {
+            var parser = new FailureParser<string>("string");
+            var input = Reader.FromString("abc");
+            var expected = Failure._("string", input).Build<string>();
+            Assert.That(parser.Apply(input).GetType(), Is.EqualTo(expected.GetType()));
+        }
     }
 }
