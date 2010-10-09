@@ -21,7 +21,8 @@ namespace ParseCSharp.Test
         public void 設定した文字列から先頭要素aを取り出せる()
         {
             var reader = Reader.FromString("abc");
-            Assert.That(reader.Pop(), Is.EqualTo('a'));
+            var opt = reader.Pop();
+            Assert.That(opt.GetOrElse(' '), Is.EqualTo('a'));
         }
 
         [Test]
@@ -29,7 +30,8 @@ namespace ParseCSharp.Test
         {
             var reader = Reader.FromString("abc");
             reader.Pop();
-            Assert.That(reader.Pop(), Is.EqualTo('b'));
+            var opt = reader.Pop();
+            Assert.That(opt.GetOrElse(' '), Is.EqualTo('b'));
         }
 
         [TestCase("abc", "abc", true)]

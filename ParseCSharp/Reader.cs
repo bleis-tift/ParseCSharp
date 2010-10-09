@@ -24,9 +24,11 @@ namespace ParseCSharp
             this.pos = 0;
         }
 
-        public T Pop()
+        public Option<T> Pop()
         {
-            return content[pos++];
+            if (pos == content.Count) return None<T>._();
+
+            return Some._<T>(content[pos++]);
         }
 
         public override bool Equals(object obj)
