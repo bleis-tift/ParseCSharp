@@ -8,11 +8,11 @@ namespace ParseCSharp
     public class Reader<T>
     {
         private int pos;
-        private T[] content;
+        private List<T> content;
 
-        public Reader(params T[] content)
+        public Reader(IEnumerable<T> content)
         {
-            this.content = content;
+            this.content = content.ToList<T>();
             this.pos = 0;
         }
 
