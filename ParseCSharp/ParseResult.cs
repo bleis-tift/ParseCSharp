@@ -33,6 +33,14 @@ namespace ParseCSharp
         }
 
         public T Result { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as Success<T, Elem>;
+            if (other == null)
+                return false;
+            return Result.Equals(other.Result);
+        }
     }
 
     public static class Failure
