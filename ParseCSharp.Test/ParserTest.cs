@@ -27,5 +27,13 @@ namespace ParseCSharp.Test
             var expected = Failure._("string", input).Build<string>();
             Assert.That(parser.Apply(input).GetType(), Is.EqualTo(expected.GetType()));
         }
+        [Test]
+        public void 一文字消費する()
+        {
+            var parser = new ItemParser<char>();
+            var input = Reader.FromString("abc");
+            var expected = Success._('a', Reader.FromString("bc"));
+            Assert.That(parser.Apply(input), Is.EqualTo(expected));
+        }
     }
 }

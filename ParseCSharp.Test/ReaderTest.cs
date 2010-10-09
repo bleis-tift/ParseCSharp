@@ -42,5 +42,11 @@ namespace ParseCSharp.Test
 
             Assert.That(r1.Equals(r2), Is.EqualTo(expected));
         }
+
+        [Test, Explicit]
+        public void Readerが空かどうか判定できる()
+        {
+            //Assert.That();
+        }
     }
 }
