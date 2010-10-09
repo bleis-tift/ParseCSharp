@@ -5,6 +5,14 @@ using System.Text;
 
 namespace ParseCSharp
 {
+    public static class Reader
+    {
+        public static Reader<char> FromString(string str)
+        {
+            return new Reader<char>(str.ToCharArray());
+        }
+    }
+
     public class Reader<T>
     {
         private int pos;
