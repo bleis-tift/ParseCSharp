@@ -20,5 +20,18 @@ namespace ParseCSharp
         {
             return content[pos++];
         }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as Reader<T>;
+            if (other == null)
+                return false;
+
+            if (pos != other.pos)
+                return false;
+            if (content.Count != other.content.Count)
+                return false;
+            return content.Zip(other.content, Tuple.Create).All(t => t.Item1.Equals(t.Item2));
+        }
     }
 }
